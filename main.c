@@ -1,18 +1,14 @@
 #include <stdio.h>
 
-int fibonacci(int n) {
-    if (n == 0) return 0;
-    if (n == 1) return 1;
-    return fibonacci(n - 1) + fibonacci(n - 2);
+int potencia(int x, int n) {
+    if (n == 0) {
+        return 1;  
+    }
+    return x * potencia(x, n - 1);  
 }
 
 int main() {
-    int n;
-    printf("Digite um número positivo: ");
-    scanf("%d", &n);
-    
-    int resultado = fibonacci(n);
-    printf("Fibonacci(%d) = %d\n", n, resultado);
-    
+    int x = 2, n = 5;
+    printf("Resultado: %d\n", potencia(x, n));
     return 0;
 }
