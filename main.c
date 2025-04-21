@@ -1,42 +1,32 @@
 #include <stdio.h>
 
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];
-    int i = (low - 1);
-    
-    for (int j = low; j < high; j++) {
-        if (arr[j] < pivot) {
-            i++;
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
+int buscaBinaria(int arr[], int low, int high, int x) {
+    if (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == x) {
+            return mid;
         }
+        if (arr[mid] > x) {
+            return buscaBinaria(arr, low, mid - 1, x);
+        }
+        return buscaBinaria(arr, mid + 1, high, x);
     }
-
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-
-    return i + 1;
-}
-
-void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
+    return -1;
 }
 
 int main() {
-    int arr[] = {9, 2, 5, 1, 7};
+    int arr[] = {1, 3, 5, 7, 9};
     int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 5;
 
-    quickSort(arr, 0, n - 1);
+    int resultado = buscaBinaria(arr, 0, n - 1, x);
 
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
+    if (resultado != -1) {
+        printf("Elemento encontrado no índice %d\n", resultado);
+    } else {
+        printf("Elemento não encontrado\n");
     }
+
     return 0;
 }
