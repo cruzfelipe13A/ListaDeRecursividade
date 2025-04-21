@@ -1,13 +1,18 @@
 #include <stdio.h>
+#include <string.h>
 
-int soma_digitos(int n) {
-    if (n == 0) {
-        return 0;  
-    }
-    return (n % 10) + soma_digitos(n / 10);
-}  
+void inverter_string(char *str, int inicio, int fim) {
+    if (inicio >= fim) return;
+    char temp = str[inicio];
+    str[inicio] = str[fim];
+    str[fim] = temp;
+    inverter_string(str, inicio + 1, fim - 1);
+}
 
 int main() {
-    int n = 1234;
-    printf("Soma dos dígitos: %d\n", soma_digitos(n)); 
+    char str[] = "recursão";
+    int comprimento = strlen(str);
+    inverter_string(str, 0, comprimento - 1);
+    printf("String invertida: %s\n", str);
+    return 0;
 }
