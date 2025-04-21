@@ -1,14 +1,15 @@
 #include <stdio.h>
 
-int potencia(int x, int n) {
-    if (n == 0) {
-        return 1;  
+void contagem_regressiva(int n) {
+    if (n < 0) {
+        return;
     }
-    return x * potencia(x, n - 1);  
+    printf("%d ", n);  
+    contagem_regressiva(n - 1);  
 }
 
 int main() {
-    int x = 2, n = 5;
-    printf("Resultado: %d\n", potencia(x, n));
+    int n = 3;
+    contagem_regressiva(n);  
     return 0;
 }
