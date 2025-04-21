@@ -1,49 +1,26 @@
 #include <stdio.h>
 
-#define N 3
-#define M 4
-
-int labirinto[N][M] = {
-    {0, 1, 0, 0},
-    {0, 0, 0, 1},
-    {1, 0, 1, 0}
-};
-
-int caminho(int x, int y) {
-    if (x < 0 || x >= N || y < 0 || y >= M || labirinto[x][y] == 1)
-        return 0;
-
-    if (x == N-1 && y == M-1) {
-        labirinto[x][y] = 2; 
-        return 1; 
+void gerarParenteses(char *s, int i, int abertos, int fechados, int n) {
+    if (fechados == n) {
+        printf("%s\n", s);
+        return;
     }
 
-    labirinto[x][y] = 2;
+    if (abertos < n) {
+        s[i] = '(';
+        gerarParenteses(s, i + 1, abertos + 1, fechados, n);
+    }
 
-    if (caminho(x + 1, y) || caminho(x, y + 1) || caminho(x - 1, y) || caminho(x, y - 1))
-        return 1;
-
-    labirinto[x][y] = 0;
-    return 0;
-}
-
-void imprimirLabirinto() {
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            if (labirinto[i][j] == 2)
-                printf("* ");
-            else
-                printf("%d ", labirinto[i][j]);
-        }
-        printf("\n");
+    if (fechados < abertos) {
+        s[i] = ')';
+        gerarParenteses(s, i + 1, abertos, fechados + 1, n);
     }
 }
 
 int main() {
-    if (caminho(0, 0)) {
-        imprimirLabirinto();
-    } else {
-        printf("Não há caminho!\n");
-    }
+    int n = 3;
+    char s[2 * n + 1];  
+    s[2 * n] = '\0';
+    gerarParenteses(s, 0, 0, 0, n);
     return 0;
 }
