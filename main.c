@@ -1,18 +1,26 @@
 #include <stdio.h>
+#include <string.h>
 
-void hanoi(int n, char origem, char auxiliar, char destino) {
-    if (n == 1) {
-        printf("Mover disco 1 de %c para %c\n", origem, destino);
-        return;
+void trocar(char *x, char *y) {
+    char temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+void permutar(char *str, int inicio, int fim) {
+    if (inicio == fim) {
+        printf("%s\n", str);
+    } else {
+        for (int i = inicio; i <= fim; i++) {
+            trocar(&str[inicio], &str[i]);
+            permutar(str, inicio + 1, fim);
+            trocar(&str[inicio], &str[i]); // backtrack
+        }
     }
-
-    hanoi(n - 1, origem, destino, auxiliar);
-    printf("Mover disco %d de %c para %c\n", n, origem, destino);
-    hanoi(n - 1, auxiliar, origem, destino);
 }
 
 int main() {
-    int n = 2;
-    hanoi(n, 'A', 'B', 'C');
+    char str[] = "abc";
+    permutar(str, 0, strlen(str) - 1);
     return 0;
 }
