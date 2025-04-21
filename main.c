@@ -1,18 +1,15 @@
 #include <stdio.h>
 
-int contar_caracteres(char *str, char c) {
-    if (*str == '\0') {
+int soma_array(int arr[], int n) {
+    if (n == 0) {
         return 0;
     }
-    if (*str == c) {
-        return 1 + contar_caracteres(str + 1, c);
-    }
-    return contar_caracteres(str + 1, c);
+    return arr[n - 1] + soma_array(arr, n - 1);
 }
 
 int main() {
-    char str[] = "abracadabra";
-    char c = 'a';
-    printf("O caractere '%c' aparece %d vezes na string.\n", c, contar_caracteres(str, c));
+    int arr[] = {1, 2, 3, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    printf("Soma dos elementos do array: %d\n", soma_array(arr, n));
     return 0;
 }
