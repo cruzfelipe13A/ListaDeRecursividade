@@ -1,15 +1,13 @@
 #include <stdio.h>
 
-void contagem_regressiva(int n) {
-    if (n < 0) {
-        return;
+int soma_digitos(int n) {
+    if (n == 0) {
+        return 0;  
     }
-    printf("%d ", n);  
-    contagem_regressiva(n - 1);  
-}
+    return (n % 10) + soma_digitos(n / 10);
+}  
 
 int main() {
-    int n = 3;
-    contagem_regressiva(n);  
-    return 0;
+    int n = 1234;
+    printf("Soma dos dígitos: %d\n", soma_digitos(n)); 
 }
