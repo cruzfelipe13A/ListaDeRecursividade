@@ -1,58 +1,49 @@
 #include <stdio.h>
 
-#define N 4
+#define N 3
+#define M 4
 
-int tabuleiro[N][N];
+int labirinto[N][M] = {
+    {0, 1, 0, 0},
+    {0, 0, 0, 1},
+    {1, 0, 1, 0}
+};
 
-int ehSeguranca(int linha, int coluna) {
-    for (int i = 0; i < linha; i++) {
-        if (tabuleiro[i][coluna] == 1) {
-            return 0;
-        }
-        if (coluna - (linha - i) >= 0 && tabuleiro[i][coluna - (linha - i)] == 1) {
-            return 0;
-        }
-        if (coluna + (linha - i) < N && tabuleiro[i][coluna + (linha - i)] == 1) {
-            return 0;
-        }
+int caminho(int x, int y) {
+    if (x < 0 || x >= N || y < 0 || y >= M || labirinto[x][y] == 1)
+        return 0;
+
+    if (x == N-1 && y == M-1) {
+        labirinto[x][y] = 2; 
+        return 1; 
     }
-    return 1;
-}
 
-int resolverNRainhas(int linha) {
-    if (linha == N) {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (tabuleiro[i][j] == 1) {
-                    printf("Q ");
-                } else {
-                    printf(". ");
-                }
-            }
-            printf("\n");
-        }
-        printf("\n");
+    labirinto[x][y] = 2;
+
+    if (caminho(x + 1, y) || caminho(x, y + 1) || caminho(x - 1, y) || caminho(x, y - 1))
         return 1;
-    }
 
-    for (int coluna = 0; coluna < N; coluna++) {
-        if (ehSeguranca(linha, coluna)) {
-            tabuleiro[linha][coluna] = 1;
-            if (resolverNRainhas(linha + 1)) {
-                return 1;
-            }
-            tabuleiro[linha][coluna] = 0;
-        }
-    }
+    labirinto[x][y] = 0;
     return 0;
 }
 
-int main() {
+void imprimirLabirinto() {
     for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            tabuleiro[i][j] = 0;
+        for (int j = 0; j < M; j++) {
+            if (labirinto[i][j] == 2)
+                printf("* ");
+            else
+                printf("%d ", labirinto[i][j]);
         }
+        printf("\n");
     }
-    resolverNRainhas(0);
+}
+
+int main() {
+    if (caminho(0, 0)) {
+        imprimirLabirinto();
+    } else {
+        printf("Não há caminho!\n");
+    }
     return 0;
 }
