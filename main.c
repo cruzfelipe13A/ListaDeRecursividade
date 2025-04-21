@@ -1,16 +1,19 @@
 #include <stdio.h>
 
-void converter_binario(int n) {
-    if (n > 1) {
-        converter_binario(n / 2);
+void imprimir_pares(int n) {
+    if (n < 0) {
+        return;
     }
-    printf("%d", n % 2);
+    if (n % 2 == 0) {
+        printf("%d ", n);
+    }
+    imprimir_pares(n - 1);
 }
 
 int main() {
-    int n = 10;
-    printf("Número binário de %d: ", n);
-    converter_binario(n);
+    int n = 6;
+    printf("Números pares até %d: ", n);
+    imprimir_pares(n);
     printf("\n");
     return 0;
 }
