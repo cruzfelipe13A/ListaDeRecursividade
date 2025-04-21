@@ -1,18 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 
-void inverter_string(char *str, int inicio, int fim) {
-    if (inicio >= fim) return;
-    char temp = str[inicio];
-    str[inicio] = str[fim];
-    str[fim] = temp;
-    inverter_string(str, inicio + 1, fim - 1);
+int verificar_palindromo(char *str, int inicio, int fim) {
+    if (inicio >= fim) return 1;
+    if (str[inicio] != str[fim]) return 0;
+    return verificar_palindromo(str, inicio + 1, fim - 1);
 }
 
 int main() {
-    char str[] = "recursão";
+    char str[] = "arara";
     int comprimento = strlen(str);
-    inverter_string(str, 0, comprimento - 1);
-    printf("String invertida: %s\n", str);
+    int resultado = verificar_palindromo(str, 0, comprimento - 1);
+    printf("%d\n", resultado);
     return 0;
 }
