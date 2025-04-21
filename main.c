@@ -1,33 +1,55 @@
 #include <stdio.h>
 
-void imprimirSubconjunto(int arr[], int n, int index, int vetorAux[]) {
-    printf("{");
-    for (int i = 0; i < n; i++) {
-        if (vetorAux[i]) {
-            printf("%d ", arr[i]);
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    int leftArr[n1], rightArr[n2];
+
+    for (int i = 0; i < n1; i++) {
+        leftArr[i] = arr[left + i];
+    }
+    for (int i = 0; i < n2; i++) {
+        rightArr[i] = arr[mid + 1 + i];
+    }
+
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (leftArr[i] <= rightArr[j]) {
+            arr[k++] = leftArr[i++];
+        } else {
+            arr[k++] = rightArr[j++];
         }
     }
-    printf("}\n");
-}
 
-void gerarSubconjuntos(int arr[], int n, int index, int vetorAux[]) {
-    if (index == n) {
-        imprimirSubconjunto(arr, n, index, vetorAux);
-        return;
+    while (i < n1) {
+        arr[k++] = leftArr[i++];
     }
 
-    vetorAux[index] = 1;
-    gerarSubconjuntos(arr, n, index + 1, vetorAux);
+    while (j < n2) {
+        arr[k++] = rightArr[j++];
+    }
+}
 
-    vetorAux[index] = 0;
-    gerarSubconjuntos(arr, n, index + 1, vetorAux);
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
 }
 
 int main() {
-    int arr[] = {1, 2};
+    int arr[] = {5, 3, 8, 1};
     int n = sizeof(arr) / sizeof(arr[0]);
-    int vetorAux[n];
 
-    gerarSubconjuntos(arr, n, 0, vetorAux);
+    mergeSort(arr, 0, n - 1);
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
     return 0;
 }
