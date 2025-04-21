@@ -1,17 +1,19 @@
 #include <stdio.h>
 
-void imprimirImpares(int n) {
-    if (n <= 0)
-        return;
-
-    imprimirImpares(n - 2);
-
-    if (n % 2 == 1)
-        printf("%d ", n);
+int buscarElemento(int arr[], int tamanho, int elemento) {
+    if (tamanho == 0)
+        return 0;
+    if (arr[0] == elemento)
+        return 1;
+    return buscarElemento(arr + 1, tamanho - 1, elemento);
 }
 
 int main() {
-    int n = 7;
-    imprimirImpares(n);
+    int numeros[] = {2, 4, 6, 8};
+    int tamanho = sizeof(numeros) / sizeof(numeros[0]);
+
+    printf("%d\n", buscarElemento(numeros, tamanho, 6));  // Saída: 1
+    printf("%d\n", buscarElemento(numeros, tamanho, 5));  // Saída: 0
+
     return 0;
 }
