@@ -1,14 +1,14 @@
 #include <stdio.h>
 
-int mdc(int a, int b) {
+int multiplicar(int a, int b) {
     if (b == 0) {
-        return a;
+        return 0;  
     }
-    return mdc(b, a % b);
+    return a + multiplicar(a, b - 1);  
 }
 
 int main() {
-    int a = 48, b = 18;
-    printf("MDC de %d e %d é: %d\n", a, b, mdc(a, b));
+    int a = 4, b = 5;
+    printf("Resultado da multiplicação: %d\n", multiplicar(a, b));
     return 0;
 }
