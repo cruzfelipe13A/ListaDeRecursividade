@@ -1,30 +1,33 @@
 #include <stdio.h>
 
-void imprimirCombinacao(int comb[], int k) {
-    for (int i = 0; i < k; i++) {
-        printf("%d ", comb[i]);
+void imprimirSubconjunto(int arr[], int n, int index, int vetorAux[]) {
+    printf("{");
+    for (int i = 0; i < n; i++) {
+        if (vetorAux[i]) {
+            printf("%d ", arr[i]);
+        }
     }
-    printf("\n");
+    printf("}\n");
 }
 
-void combinar(int arr[], int n, int k, int index, int comb[], int i) {
-    if (index == k) {
-        imprimirCombinacao(comb, k);
+void gerarSubconjuntos(int arr[], int n, int index, int vetorAux[]) {
+    if (index == n) {
+        imprimirSubconjunto(arr, n, index, vetorAux);
         return;
     }
-    if (i >= n) return;
 
-    comb[index] = arr[i];
-    combinar(arr, n, k, index + 1, comb, i + 1); // inclui arr[i]
-    combinar(arr, n, k, index, comb, i + 1);     // não inclui arr[i]
+    vetorAux[index] = 1;
+    gerarSubconjuntos(arr, n, index + 1, vetorAux);
+
+    vetorAux[index] = 0;
+    gerarSubconjuntos(arr, n, index + 1, vetorAux);
 }
 
 int main() {
-    int arr[] = {1, 2, 3};
+    int arr[] = {1, 2};
     int n = sizeof(arr) / sizeof(arr[0]);
-    int k = 2;
-    int comb[10]; // tamanho máximo arbitrário
+    int vetorAux[n];
 
-    combinar(arr, n, k, 0, comb, 0);
+    gerarSubconjuntos(arr, n, 0, vetorAux);
     return 0;
 }
