@@ -1,14 +1,18 @@
 #include <stdio.h>
 
-int multiplicar(int a, int b) {
-    if (b == 0) {
-        return 0;  
+int contar_caracteres(char *str, char c) {
+    if (*str == '\0') {
+        return 0;
     }
-    return a + multiplicar(a, b - 1);  
+    if (*str == c) {
+        return 1 + contar_caracteres(str + 1, c);
+    }
+    return contar_caracteres(str + 1, c);
 }
 
 int main() {
-    int a = 4, b = 5;
-    printf("Resultado da multiplicação: %d\n", multiplicar(a, b));
+    char str[] = "abracadabra";
+    char c = 'a';
+    printf("O caractere '%c' aparece %d vezes na string.\n", c, contar_caracteres(str, c));
     return 0;
 }
