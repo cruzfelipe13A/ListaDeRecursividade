@@ -1,19 +1,17 @@
 #include <stdio.h>
 
-void imprimir_pares(int n) {
-    if (n < 0) {
+void imprimirImpares(int n) {
+    if (n <= 0)
         return;
-    }
-    if (n % 2 == 0) {
+
+    imprimirImpares(n - 2);
+
+    if (n % 2 == 1)
         printf("%d ", n);
-    }
-    imprimir_pares(n - 1);
 }
 
 int main() {
-    int n = 6;
-    printf("Números pares até %d: ", n);
-    imprimir_pares(n);
-    printf("\n");
+    int n = 7;
+    imprimirImpares(n);
     return 0;
 }
